@@ -14,26 +14,26 @@ extern void f(int a);
 
 int test1() {
   int a;
-  f(a);  // required
+  f(a);
   return a;
 }
 
 int test11() {
   int a;
-  f((int)a);  // required
+  f((int)a);
   return a;
 }
 
 extern void faddr(int *a);
 int test2() {
   int a;
-  faddr(&a);  // not required
-  return a;   // not required
+  faddr(&a);  // #nodefect#USE_UNINIT
+  return a;   // #nodefect#USE_UNINIT
 }
 
 int *test3() {
   int *a;
-  faddr(a);  // required
+  faddr(a);
   return a;
 }
 
@@ -45,7 +45,7 @@ class A {
 
 int *test4() {
   A ca;
-  faddr(ca.b);  // required
+  faddr(ca.b);
   return ca.b;
 }
 
@@ -57,15 +57,15 @@ int test5() {
 
 int test6() {
   A ca;
-  f(ca.a);  // required
+  f(ca.a);
   return ca.a;
 }
 
 int test7() {
   A ca;
-  f(*(ca.b));      // required
-  int x = ca.a;    // required
-  return *(ca.b);  // not required
+  f(*(ca.b));
+  int x = ca.a;
+  return *(ca.b);  // #nodefect#USE_UNINIT
 }
 
 typedef void (*block128_f)(const unsigned char arr[16], const void *key);
@@ -84,28 +84,28 @@ void callUnimplemented(int *ptr);
 void test(CONTEXT *ctx) {
   int *p;
 
-  callUnimplemented(p);  // required
+  callUnimplemented(p);
 
   Block_c tmp_c;
-  ctx->encrypt(tmp_c.c, ctx->keyenc);  // not required
+  ctx->encrypt(tmp_c.c, ctx->keyenc);  // #nodefect#USE_UNINIT
 }
 
 void *testPtr(unsigned long len);
 
 void test() {
   int *p;
-  p = (int *)testPtr(sizeof(*p));  // not required
+  p = (int *)testPtr(sizeof(*p));  // #nodefect#USE_UNINIT
 }
 
 void test03() {
   int *p;
 
   int *p2;
-  p2 = (int *)testPtr(sizeof(*p));  // not required
+  p2 = (int *)testPtr(sizeof(*p));  // #nodefect#USE_UNINIT
 }
 
 void test04() {
   int *p;
 
-  *p = sizeof(*p);  // required
+  *p = sizeof(*p);
 }
