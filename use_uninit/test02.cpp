@@ -24,7 +24,7 @@ void test01() {
   struct A *ac;
   ac = (struct A *)malloc(sizeof(struct A));
   setVal(ac);
-  use(ac);  // required
+  use(ac);
 }
 
 void test01s() {
@@ -33,7 +33,7 @@ void test01s() {
   setVal(ac);
   int x;
   ac->b = &x;
-  use(ac);  // required
+  use(ac);
 }
 
 int *read(struct A *call) { return call->b; }
@@ -43,7 +43,7 @@ void test011s() {
   setVal(ac);
   int x;
   ac->b = &x;
-  read(ac);  // not required
+  read(ac);  // #nodefect#USE_UNINIT
 }
 
 int use(int *x) { return *x + 2; }
@@ -51,5 +51,5 @@ int use(int *x) { return *x + 2; }
 void test02(int c) {
   int *x;
   if (c) x = &c;
-  use(x);  // required
+  use(x);
 }
