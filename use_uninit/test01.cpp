@@ -11,23 +11,23 @@ int test01(int c) {
   if (c)
     return c;
   else
-    return x;  // required
+    return x;
 }
 
 void test03() {
   int x[4];
-  int b = x[1];  // required
+  int b = x[1];
 }
 
 void test04() {
   int x;
-  int y = x;  // required
+  int y = x;
 }
 
 void test05() {
   int x[4];
   for (int i = 0; i < 4; i++) {
-    int b = x[i];  // required
+    int b = x[i];
   }
 }
 
@@ -37,13 +37,13 @@ int test06(int x) {
     case 1:
     case 2:
     case 3:
-      a = b;  // required
+      a = b;
       break;
     case 4:
       int c;
-      return c;  // required
+      return c;
   }
-  return a;  // required
+  return a;
 }
 
 struct CC {
@@ -53,7 +53,7 @@ struct CC {
 };
 void test07() {
   CC c;
-  c.b = c.a;  // required
+  c.b = c.a;
 }
 
 union UU {
@@ -64,17 +64,17 @@ union UU {
 char test08() {
   UU u;
   u.a = 4;
-  return u.b;  // not required
+  return u.b;  // #nodefect#USE_UNINIT
 }
 
 void test10() {
   int a;
-  int *p = &a;  // not required
+  int *p = &a;  // #nodefect#USE_UNINIT
 }
 
 int test11() {
   int a;
-  if (a) {  // required
+  if (a) {
     return a + 1;
   } else {
     return 2;
@@ -84,11 +84,11 @@ int test11() {
 void test12() {
   int a;
   int b = 1;
-  a = a + 1 + a + 2 + a + b;  // required
+  a = a + 1 + a + 2 + a + b;
 }
 
 int ga;
-int test13() { return ga + 4; }  // not required
+int test13() { return ga + 4; }  // #nodefect#USE_UNINIT
 
 int test14(int c) {
   int x;
@@ -96,7 +96,7 @@ int test14(int c) {
     x = 5;
     return x;
   } else {
-    return x + 6;  // required
+    return x + 6;
   }
 }
 
@@ -105,13 +105,13 @@ int test15(int c) {
   if (c) {
     x = 5;
   }
-  return x + 6;  // required
+  return x + 6;
 }
 
 void test16() {
   int x[4] = {1, 2};
   for (int i = 0; i < 4; i++) {
-    int b = x[i];  // not required
+    int b = x[i];  // #nodefect#USE_UNINIT
   }
 }
 
@@ -131,19 +131,19 @@ void test171() {
   x[2] = 2;
   x[3] = 4;
   for (int i = 0; i < 4; i++) {
-    int b = x[i];  // not required
+    int b = x[i];  // #nodefect#USE_UNINIT
   }
 }
 
 int test18() {
   CC c;
   c.b = 1;
-  return c.a;  // required
+  return c.a;
 }
 
 int test19() {
   int *p;
-  *p = 1;  // required
+  *p = 1;
   return 0;
 }
 
@@ -154,34 +154,34 @@ struct DD {
 
 void test20(int x) {
   DD d;
-  d.c.a = d.c.a + 1;  // required
+  d.c.a = d.c.a + 1;
 }
 
 void test21(int x) {
   DD d;
   d.c.q = 1;
-  d.c.a = d.c.b + 1;  // required
+  d.c.a = d.c.b + 1;
 }
 
 void test22(int x) {
   DD d;
   d.c.q = 1;
-  d.c.a = d.c.q + 1;  // not required
+  d.c.a = d.c.q + 1;  // #nodefect#USE_UNINIT
 }
 
 void test23(int x) {
   DD d;
   d.c = {1, 2};
-  x = d.q;  // required
+  x = d.q;
 }
 
 int test24(int x) {
   DD d;
   d.c = {1, 2};
-  d.c.a = d.c.a + 1;  // not required
-  d.c.q = 1;          // not required
-  d.c.a = d.c.b + 1;  // not required
-  return d.c.b;       // not required
+  d.c.a = d.c.a + 1;  // #nodefect#USE_UNINIT
+  d.c.q = 1;          // #nodefect#USE_UNINIT
+  d.c.a = d.c.b + 1;  // #nodefect#USE_UNINIT
+  return d.c.b;       // #nodefect#USE_UNINIT
 }
 
 int test25() {
@@ -193,24 +193,24 @@ int test25() {
 
 int test26() {
   int x[10][20];
-  return x[0][1];  // required
+  return x[0][1];
 }
 
 int test27() {
   int x[10];
-  x[3] = x[3] + 1;  // required
+  x[3] = x[3] + 1;
   return 0;
 }
 
 int test28() {
   int i;
-  i *= 9;  // required //use i first
+  i *= 9;
   return 0;
 }
 
 int globalInt;
 void test() {
-  int j = globalInt;  // not required
+  int j = globalInt;  // #nodefect#USE_UNINIT
 }
 
 class Aben {
@@ -229,17 +229,17 @@ void fun2() {
   Aben *x = (Aben *)&y;
   x->a = 0;
   x->b = 0;
-  int n = y.a;  // not required
-  n = y.b;      // not required
-  n = y.c;      // required
+  int n = y.a;  // #nodefect#USE_UNINIT
+  n = y.b;      // #nodefect#USE_UNINIT
+  n = y.c;
 }
 
 void fun3() {
   Aben y;
   Bben *x = (Bben *)&y;
   x->a = 0;
-  int n = y.a;  // not required
-  n = y.b;      // required
+  int n = y.a;  // #nodefect#USE_UNINIT
+  n = y.b;
 }
 
 class Test6 {
@@ -268,7 +268,7 @@ class Test7 {
 void test7() {
   Test7 tg7;
   tg7.var1 = 0;
-  char x = tg7.buf2[0];  // required
+  char x = tg7.buf2[0];
 }
 
 class Test8 {
@@ -280,7 +280,7 @@ class Test8 {
 
 void test8() {
   Test8 tg8;
-  char x = tg8.buf2[0];  // required
+  char x = tg8.buf2[0];
 }
 
 class Test9 {
@@ -290,7 +290,7 @@ class Test9 {
 
 void test9() {
   Test9 tg9;
-  char x = tg9.buf[0];  // required
+  char x = tg9.buf[0];
 }
 
 struct rbsp {
@@ -306,7 +306,7 @@ void fun9(char *buf) {
 
   sps.buf = buf + 5; /* Skip NAL header */
 
-  auto x = sps.buf[0];  // not required
+  auto x = sps.buf[0];  // #nodefect#USE_UNINIT
 }
 
 extern "C" {
@@ -330,5 +330,5 @@ void test(mca_common_ompio_access_array_t **others_req_ptr, int i) {
   others_req[i].count = 0;
   def fpr;
   fpr = f;
-  fpr(others_req[i].offsets);  // required
+  fpr(others_req[i].offsets);
 }
