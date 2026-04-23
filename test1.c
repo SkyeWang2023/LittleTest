@@ -9,8 +9,22 @@ bool copy_name(char *dst, size_t dst_size, const char *src)
   return true;
 }
 
-void test()
+char *get_char(char *str, int pos)
 {
-  int x;
-  int y = x;
+  return str[pos];
+}
+
+void test1(int index)
+{
+  int arr[10];
+  int value = arr[index];
+}
+
+void test(unsigned len)
+{
+  char *buf = malloc(len);
+  char *p = buf + len;
+  while (p > buf && *(p - 1) == ' ')
+    --p;
+  char i = *(p - 1);
 }
