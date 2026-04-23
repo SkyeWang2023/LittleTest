@@ -5,4 +5,5 @@ void test(char	**arg){
 	    g++;
 	}
   ++*arg;
+  g++;
 }
