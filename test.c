@@ -4,5 +4,5 @@ void test(char	**arg){
 	{
 	    g++;
 	}
-	++*arg; // #defect#Illegal memory readWrite
+  ++*arg;
 }
