@@ -28,3 +28,17 @@ void test(unsigned len)
     --p;
   char i = *(p - 1);
 }
+
+struct packet
+{
+  int length;
+  char data[1];
+};
+
+void process_packet(struct packet *pkt)
+{
+  for (int i = 0; i < pkt->length; i++)
+  {
+    process_byte(pkt->data[i]);
+  }
+}
