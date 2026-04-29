@@ -84,3 +84,9 @@ did_set_string_option(opt_idx, varp, new_value_alloced, oldval, errbuf,
 
     return errmsg;
 }
+
+
+void do_something (){
+	 keymap_init();
+	 set_iminsert_global()
+}
