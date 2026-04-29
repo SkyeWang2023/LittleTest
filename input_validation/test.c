@@ -90,3 +90,11 @@ void do_something (){
 	 keymap_init();
 	 set_iminsert_global()
 }
+
+
+void porc_file(){
+	if (varp == &curbuf->b_p_keymap)
+    {
+			keymap_init(); 
+		}
+}
