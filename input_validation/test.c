@@ -124,3 +124,8 @@ void file_init(char	**varp){
     set_imsearch_global();
   }
 }
+
+void test(){
+  // 这个函数调用没有问题么？
+  keymap_init();  
+}
