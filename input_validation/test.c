@@ -98,3 +98,16 @@ void porc_file(){
 			keymap_init(); 
 		}
 }
+
+// 这段是vim源码，帮我分析有什么问题，忽略变量没定义的问题
+void init_and_exc(char	**varp){
+	if (varp == &curbuf->b_p_keymap)
+    {
+			keymap_init(); 
+		}
+    
+    if (*curbuf->b_p_keymap != NUL && errmsg == NULL)
+	{
+    set_imsearch_global();
+  }
+}
