@@ -111,3 +111,16 @@ void init_and_exc(char	**varp){
     set_imsearch_global();
   }
 }
+
+// 这段是vim源码，帮我分析有什么问题，忽略变量没定义的问题
+void file_init(char	**varp){
+	if (curbuf != NUL && varp == &curbuf->b_p_keymap)
+    {
+			keymap_init(); 
+		}
+    
+    if (curbuf != NUL && *curbuf->b_p_keymap != NUL && errmsg == NULL)
+	{
+    set_imsearch_global();
+  }
+}
