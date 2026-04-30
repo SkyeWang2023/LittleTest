@@ -141,3 +141,19 @@ void build_file(char	**varp){
     set_imsearch_global();
   }
 }
+
+void access_file(char	**varp){
+  if(curbuf == NUL || curbuf->b_p_keymap == NUL )
+  {
+    return;
+  }
+	if (varp == &curbuf->b_p_keymap)
+    {
+			keymap_init(); 
+		}
+    
+    if (*curbuf->b_p_keymap != NUL && errmsg == NULL)
+	{
+    set_imsearch_global();
+  }
+}
