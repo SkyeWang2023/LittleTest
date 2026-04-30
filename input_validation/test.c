@@ -124,3 +124,20 @@ void file_init(char	**varp){
     set_imsearch_global();
   }
 }
+
+void test(){
+  // 这个函数调用没有问题么？
+  keymap_init();  
+}
+
+void build_file(char	**varp){
+	if (curbuf != NUL && varp == &curbuf->b_p_keymap)
+    {
+			keymap_init(); 
+		}
+    
+    if (curbuf != NUL && curbuf->b_p_keymap != NUL && *curbuf->b_p_keymap != NUL && errmsg == NULL)
+	{
+    set_imsearch_global();
+  }
+}
